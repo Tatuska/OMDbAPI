@@ -20,15 +20,31 @@
 	</form>
 	<div id="list"></div>
 	<script type="text/javascript">
+		var url = "http://www.omdbapi.com/?s=";
 		var list = document.getElementById("list");
 		var input = document.getElementById("input");
 		var button = document.getElementById("search");
 
-		button.addEventListener("click", function (e) {
+		var xhttp; //skapa object
+		if (window.XMLHttpRequest) {
+			xhttp = new XMLHttpRequest();
+		} else {
+			xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		button.addEventListener("click", function (e) { //skicka förfrågan
 			e.preventDefault();
 			//			prevent of updateing the page
-			console.log("You clicked the button");
-		})
+			xhttp.open("GET", url + input.value);
+			xhttp.send();
+		});
+		xhttp.onreadystatechange = function () {
+			if (xhttp.readyState === 4 && xhttp.status === 200) {
+				//hantera svaret
+				var obj = JSON.parse(xhttp.responseText);
+				console.log(obj);
+			}
+		};
 	</script>
 </body>
 
