@@ -41,8 +41,19 @@
 		xhttp.onreadystatechange = function () {
 			if (xhttp.readyState === 4 && xhttp.status === 200) {
 				//hantera svaret
-				var obj = JSON.parse(xhttp.responseText);
+				var obj = JSON.parse(xhttp.responseText); //Search; //we are writing search in order to itterate throught the array and not the object. cause the whole object name is search
+				var items = "";
 				console.log(obj);
+
+				for (var i in obj.Search) {
+					items += "<article>" +
+						"<h1>" + obj.Search[i].Title + "</h1>" +
+						"<p>" + obj.Search[i].Year + "<p>" +
+						"<p>" + obj.Search[i].Type + "<p>" +
+						"<img src=" + obj.Search[i].Poster + ">" +
+						"</article>";
+				}
+				list.innerHTML = items;
 			}
 		};
 	</script>
